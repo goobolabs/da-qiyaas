@@ -324,10 +324,4 @@ age-prediction-system/
 | Old UI remains visible | Restart the frontend after a rebuild and refresh the browser with Ctrl+Shift+R. |
 | Browser tests cannot launch | Check Microsoft Edge is installed; the Playwright config uses the `msedge` channel. |
 
-## Design and project notes
 
-The visual design uses the [Goobo Labs](https://www.goobolabs.so/en) logo, mint **#3ACC69**, **Space Grotesk** headings and **Manrope** body text. Assets are served locally. Source details are documented in [specs/brand](specs/brand/README.md).
-
-Development follows the project's [requirements](specs/requirements.md), [technical plan](specs/plan.md), [task list](specs/tasks.md) and [verification record](specs/verification.md).
-
-Next.js is pinned to 15.5.24, with PostCSS 8.5.28 overridden in the package manifest. OpenCV 4 is pinned for the Haar cascade API used here. The image backbone is [torchvision MobileNetV3 Small](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.mobilenet_v3_small.html).
