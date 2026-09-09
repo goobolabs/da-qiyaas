@@ -326,7 +326,7 @@ age-prediction-system/
 
 ## License
 
-Da’qiyaas source code is licensed under the [MIT License](LICENSE), copyright © 2026 Omar Tood.
+Da’qiyaas source code is licensed under the [MIT License](LICENSE), copyright © 2026 Goobo Labs.
 
 [UTKFace](https://github.com/aicip/UTKFace) is available for **non-commercial research purposes only** and is subject to its own terms. The MIT license does not relicense the dataset or grant commercial-use permission for the trained model. Dataset images and model weights are excluded from this repository.
 
