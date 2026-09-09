@@ -324,6 +324,27 @@ age-prediction-system/
 | Old UI remains visible | Restart the frontend after a rebuild and refresh the browser with Ctrl+Shift+R. |
 | Browser tests cannot launch | Check Microsoft Edge is installed; the Playwright config uses the `msedge` channel. |
 
+## Spoken results
+
+Select **Sound off** to enable Somali speech before scanning or uploading. Once the final estimate is ready, the app says “Da’daada waxaa lagu qiyaasay 24 sano.” The number matches the displayed estimate. **Listen again** replays it; **Stop audio**, muting, a new image or a mode change cancels playback. The sound preference is saved in this browser and defaults to off.
+
+The app first looks for a Somali voice on the device. Available voices depend on the browser and operating system ([Web Speech documentation](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices)). If none is available, it requests audio from the backend. An unavailable or blocked voice leaves the visual estimate usable.
+
+For devices without a Somali voice, configure [Azure Speech](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support) with the `so-SO-UbaxNeural` voice. In a PowerShell terminal at the project root, set the resource region and enter the key privately, then start the backend from that same terminal:
+
+```powershell
+$env:AZURE_SPEECH_REGION = 'eastus' # Use your resource's region
+$speechSecret = Read-Host 'Azure Speech key' -AsSecureString
+$env:AZURE_SPEECH_KEY = [System.Net.NetworkCredential]::new('', $speechSecret).Password
+.\start-backend.ps1
+```
+
+Restart an already running backend after configuring credentials. Keep the key out of frontend variables and Git. No Azure account or paid resource is created by this project. Choose the Azure pricing tier explicitly in your account.
+
+`GET /api/speech` reports server availability; `POST /api/speech` accepts only an integer `age` from 0 to 120 and returns MP3 audio. The server generates a fixed sentence and sends only that text to Azure, never a portrait. Clips are cached in memory by age until the backend restarts. Requests time out and speech errors do not change the prediction. The browser may require **Listen again** before allowing playback.
+
+Voice orchestration is tested with simulated browser voices and provider responses. Azure audio quality and Somali pronunciation still need a listening check with configured credentials.
+
 ## License
 
 Da’qiyaas source code is licensed under the [MIT License](LICENSE), copyright © 2026 Goobo Labs.

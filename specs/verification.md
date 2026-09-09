@@ -104,3 +104,12 @@ Production build passed. Theme persistence/mobile layout and camera-indicator te
 ## Git preparation
 
 Initialized a local main branch and reviewed files eligible for version control. Dataset contents, trained/pretrained weights, Python/Node dependencies, build caches, test output, .env files, runtime recordings, and one-time brand inspection helpers are ignored. README demo assets, brand assets, lockfile, environment template, source, tests and portable metric reports remain included. Empty placeholders retain the dataset and model destination folders. No source or dataset files were deleted.
+
+## Somali result speech — 2026-09-10
+
+- Added the fixed Somali estimate sentence, opt-in sound preference, replay and cancellation for completed results.
+- Added optional Azure speech with server-only credentials, integer validation, bounded requests and an in-memory clip cache.
+- Backend: 24 tests passed. Browser: 13 passed with the integration test skipped in the first run; all four voice tests and real-model integration passed in the targeted final run (15 distinct passing browser tests across runs).
+- Production build and TypeScript checks passed. README links and GIF validation passed.
+- Local headless Edge exposed three en-GB voices and no Somali voice. The backend reports speech unavailable because Azure credentials are not configured. Actual Azure synthesis and Somali pronunciation have not been tested.
+- On Windows the first Playwright run needed its finished test server stopped manually to complete teardown; assertions passed.

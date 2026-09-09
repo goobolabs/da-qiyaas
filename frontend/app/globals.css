@@ -170,3 +170,11 @@ html[data-theme='dark'] .quality-item.needs-work strong { color: #edbd73; }
   .quality-indicators { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 380px) { .product-name { display: none; } }
+
+.result-voice { margin: 18px 0 24px; }
+.voice-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.voice-actions button { border: 1px solid var(--line); border-radius: 10px; padding: 9px 13px; background: transparent; color: var(--ink); cursor: pointer; }
+.voice-actions button[aria-pressed="true"] { border-color: var(--green); }
+.voice-actions button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.result-voice p { font-size: 13px; line-height: 1.6; margin: 10px 0 0; }
+.result-voice .voice-notice { color: var(--muted); font-size: 12px; }

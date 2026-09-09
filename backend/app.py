@@ -11,6 +11,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.exceptions import RequestEntityTooLarge
 
 from ml.model import ROOT, load_model, preprocess
+from backend.speech import speech_blueprint
 
 Image.MAX_IMAGE_PIXELS = 16_000_000
 
@@ -112,6 +113,7 @@ def decode_image(raw):
 
 def create_app(predictor=None):
     app = Flask(__name__)
+    app.register_blueprint(speech_blueprint())
     app.request_class = MemoryRequest
     app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024 + 64 * 1024
     service = predictor if predictor is not None else Predictor()
