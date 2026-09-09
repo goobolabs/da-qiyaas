@@ -324,4 +324,12 @@ age-prediction-system/
 | Old UI remains visible | Restart the frontend after a rebuild and refresh the browser with Ctrl+Shift+R. |
 | Browser tests cannot launch | Check Microsoft Edge is installed; the Playwright config uses the `msedge` channel. |
 
+## License
+
+Da’qiyaas source code is licensed under the [MIT License](LICENSE), copyright © 2026 Omar Tood.
+
+[UTKFace](https://github.com/aicip/UTKFace) is available for **non-commercial research purposes only** and is subject to its own terms. The MIT license does not relicense the dataset or grant commercial-use permission for the trained model. Dataset images and model weights are excluded from this repository.
+
+Third-party dependencies, fonts and brand assets retain their respective licenses and ownership. The portrait shown in the demo is not covered by the source code license.
+
 
