@@ -1,0 +1,14 @@
+{
+  "source": "https://www.goobolabs.so/en",
+  "logo": "https://www.goobolabs.so/logo.svg",
+  "fonts": [
+    {
+      "url": "https://www.goobolabs.so/_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2",
+      "file": "font-1.woff2"
+    },
+    {
+      "url": "https://www.goobolabs.so/_next/static/media/a343f882a40d2cc9-s.p.1sj6eobyi31rd.woff2",
+      "file": "font-2.woff2"
+    }
+  ]
+}

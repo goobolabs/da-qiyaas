@@ -1,0 +1,61 @@
+﻿# Local datasets and generated training data
+/data/*
+!/data/UTKFace/
+/data/UTKFace/*
+!/data/UTKFace/.gitkeep
+
+# Trained models, candidates, pretrained weights and local reports
+/models/*
+!/models/.gitkeep
+*.pt
+*.pth
+*.onnx
+
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
+
+# Node dependencies and Next.js build output
+node_modules/
+.next/
+/frontend/out/
+/frontend/dist/
+/frontend/next-env.d.ts
+*.tsbuildinfo
+
+# Local environment configuration; keep the documented template
+.env
+.env.*
+!.env.example
+
+# Test artifacts, recordings before encoding and runtime files
+test-results/
+playwright-report/
+blob-report/
+coverage/
+.run/
+*.log
+*.tmp
+
+# One-time brand inspection helpers and raw reference dump
+/frontend/inspect-brand.cjs
+/frontend/fetch-brand.cjs
+/frontend/capture-design.cjs
+/specs/brand/reference.json
+/reference.html
+
+# Machine-specific editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

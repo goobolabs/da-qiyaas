@@ -1,0 +1,14 @@
+﻿{
+    "input_images":  23708,
+    "invalid_count":  0,
+    "duplicate_copies":  390,
+    "conflicting_label_groups":  205,
+    "usable_unique_images":  23113,
+    "split_counts":  {
+                         "train":  16176,
+                         "validation":  3467,
+                         "test":  3470
+                     },
+    "seed":  42,
+    "limitations":  "Exact-pixel duplicates removed. Near duplicates and shared identities are not guaranteed separated; UTKFace filenames do not provide reliable identity IDs."
+}

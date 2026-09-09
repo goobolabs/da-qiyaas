@@ -1,0 +1,31 @@
+{
+  "source": "One adult UTKFace test portrait",
+  "virtual_camera": true,
+  "mocked_api": false,
+  "uploaded_age": "28\nyears",
+  "camera_age": "28\nyears",
+  "duration_ms": 12729,
+  "events": [
+    {
+      "name": "Light theme",
+      "at_ms": 0
+    },
+    {
+      "name": "Upload a portrait — real API",
+      "at_ms": 1264
+    },
+    {
+      "name": "Dark theme",
+      "at_ms": 3202
+    },
+    {
+      "name": "Virtual camera — real scan and model",
+      "at_ms": 4557
+    },
+    {
+      "name": "Scan complete — camera stopped",
+      "at_ms": 10548
+    }
+  ],
+  "frames": 41
+}
