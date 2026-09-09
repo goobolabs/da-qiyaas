@@ -1,10 +1,10 @@
 {
-  "source": "One adult UTKFace test portrait",
+  "source": "User-provided portrait",
   "virtual_camera": true,
   "mocked_api": false,
-  "uploaded_age": "28\nyears",
-  "camera_age": "28\nyears",
-  "duration_ms": 12729,
+  "uploaded_age": "23\nyears",
+  "camera_age": "24\nyears",
+  "duration_ms": 12938,
   "events": [
     {
       "name": "Light theme",
@@ -12,20 +12,20 @@
     },
     {
       "name": "Upload a portrait — real API",
-      "at_ms": 1264
+      "at_ms": 1256
     },
     {
       "name": "Dark theme",
-      "at_ms": 3202
+      "at_ms": 3192
     },
     {
       "name": "Virtual camera — real scan and model",
-      "at_ms": 4557
+      "at_ms": 4552
     },
     {
       "name": "Scan complete — camera stopped",
-      "at_ms": 10548
+      "at_ms": 10523
     }
   ],
-  "frames": 41
+  "frames": 45
 }

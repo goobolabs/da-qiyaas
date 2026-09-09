@@ -1,4 +1,4 @@
-// Run from frontend/: node scripts/record-demo.cjs
+// Run from frontend/: node scripts/record-demo.cjs [--image "path/to/portrait.jpg"]
 // Both local services must be running. No API responses are mocked.
 const { chromium, expect } = require('@playwright/test');
 const fs = require('node:fs');
@@ -17,6 +17,11 @@ const path = require('node:path');
     const page = await context.newPage();
     const health = await context.request.get('http://127.0.0.1:3000/api/health');
     if (!health.ok()) throw new Error('Start Flask with a trained model before recording.');
+    const imageFlag = process.argv.indexOf('--image');
+    if (imageFlag >= 0 && !process.argv[imageFlag + 1]) throw new Error('--image requires a portrait path.');
+    let input = imageFlag >= 0 ? path.resolve(process.argv[imageFlag + 1]) : null;
+    if (input && !fs.existsSync(input)) throw new Error('The supplied portrait does not exist.');
+    if (!input) {
     const rows = JSON.parse(fs.readFileSync(path.join(root, 'data/processed/test.json'), 'utf8'));
     let selected;
     // Choose by input validity, never by agreement with the age label.
@@ -27,16 +32,17 @@ const path = require('node:path');
       if (response.ok()) { selected = row; break; }
     }
     if (!selected) throw new Error('No demo portrait passed camera quality checks.');
-    const input = path.join(root, selected.path);
+    input = path.join(root, selected.path);
+    }
     const encoded = fs.readFileSync(input).toString('base64');
     await page.addInitScript(encoded => {
-      // A deterministic virtual camera shows a local dataset portrait.
+      // A deterministic virtual camera shows the selected local portrait.
       // Face detection, quality checks and inference still use the real backend.
       navigator.mediaDevices.getUserMedia = async () => {
         const photo = new Image(); photo.src = `data:image/jpeg;base64,${encoded}`;
         await photo.decode();
-        const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 640;
-        const draw = () => canvas.getContext('2d').drawImage(photo, 0, 0, 640, 640);
+        const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = Math.round(640 * photo.naturalHeight / photo.naturalWidth);
+        const draw = () => canvas.getContext('2d').drawImage(photo, 0, 0, canvas.width, canvas.height);
         draw();
         const media = canvas.captureStream(10);
         const refresh = setInterval(() => {
@@ -86,7 +92,7 @@ const path = require('node:path');
     await page.screenshot({ path: path.join(assets, 'dark-result.png'), fullPage: true });
     recording = false;
     await captureTask;
-    const report = { source: 'One adult UTKFace test portrait', virtual_camera: true, mocked_api: false, uploaded_age: uploadedAge, camera_age: cameraAge, duration_ms: Date.now() - started, events, frames: entries };
+    const report = { source: imageFlag >= 0 ? 'User-provided portrait' : 'One adult UTKFace test portrait', virtual_camera: true, mocked_api: false, uploaded_age: uploadedAge, camera_age: cameraAge, duration_ms: Date.now() - started, events, frames: entries };
     fs.writeFileSync(path.join(frames, 'manifest.json'), JSON.stringify(report, null, 2));
     fs.writeFileSync(path.join(assets, 'demo-recording.json'), JSON.stringify({ ...report, frames: entries.length }, null, 2));
     console.log(JSON.stringify({ passed: true, frames: entries.length, duration_ms: report.duration_ms, uploadedAge, cameraAge }));

@@ -24,7 +24,7 @@ Da’qiyaas finds a face in an image and estimates its age. You can upload a por
 
 ![Da’qiyaas: image upload, dark mode, face scanning and an age estimate](docs/assets/demo.gif)
 
-*Recorded from the running app with the real Flask API and trained model. One adult UTKFace test portrait is uploaded, then supplied through a virtual camera. API results are not mocked. This demonstrates the workflow; it does not measure webcam accuracy. The sample was selected for passing capture checks, not for matching its age label.*
+*Recorded from the running app with the real Flask API and trained model. The project owner's supplied portrait is uploaded, then supplied through a virtual camera. API results are not mocked. This demonstrates the workflow; it does not measure webcam accuracy. The displayed ages are model estimates; the portrait has no verified age label in this demo.*
 
 [View the light interface](docs/assets/overview.png) · [View the dark result](docs/assets/dark-result.png) · [Recording details](docs/assets/demo-recording.json)
 
@@ -280,11 +280,11 @@ Keep both local services running, then run:
 
 ```powershell
 # From the project root:
-node frontend/scripts/record-demo.cjs
+node frontend/scripts/record-demo.cjs --image "C:\path\to\portrait.jpg"
 .\.venv\Scripts\python.exe scripts/encode_demo.py
 ```
 
-The recording script uses headless Edge, checks a valid adult test portrait, exercises upload and a virtual-camera scan, and asserts that the camera stops after success. PNG frames go to `.run/demo-frames/`; Pillow encodes them into `docs/assets/demo.gif` using their recorded timing. No extra video encoder is required.
+The recording script uses headless Edge, uses the supplied portrait, exercises upload and a virtual-camera scan, and asserts that the camera stops after success. PNG frames go to `.run/demo-frames/`; Pillow encodes them into `docs/assets/demo.gif` using their recorded timing. No extra video encoder is required. Omitting --image falls back to a valid adult UTKFace test portrait.
 
 ## Project map
 
