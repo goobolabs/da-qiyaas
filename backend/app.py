@@ -11,6 +11,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.exceptions import RequestEntityTooLarge
 
 from ml.model import ROOT, load_model, preprocess
+from ml.face_crop import crop_face
 from backend.speech import speech_blueprint
 
 Image.MAX_IMAGE_PIXELS = 16_000_000
@@ -62,8 +63,7 @@ class Predictor:
             quality = check_camera_quality(gray[y:y + height, x:x + width], box) if camera else None
             if scan_only:
                 return {'face_box': box, 'ready': True, 'quality': quality}
-            margin = int(max(width, height) * 0.15)
-            face = image.crop((max(0, x - margin), max(0, y - margin), min(image.width, x + width + margin), min(image.height, y + height + margin)))
+            face = crop_face(image, (x, y, width, height))
             with torch.inference_mode():
                 age = self.model(self.transform(face).unsqueeze(0)).item()
         if not np.isfinite(age):

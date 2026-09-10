@@ -18,7 +18,7 @@
 
 Da’qiyaas finds a face in an image and estimates its age. You can upload a portrait or open the camera for an automatic scan. The camera waits for a clear, steady face, collects five estimates, displays their median, and stops. The interface follows the Goobo Labs brand and supports light and dark themes.
 
-**The output is an estimate, not a verified age.** The current model has a test mean absolute error (MAE) of **6.72 years** on this project's UTKFace split. Its accuracy on physical-webcam images has not been measured.
+**The output is an estimate, not a verified age.** The current model has a test mean absolute error (MAE) of **5.72 years** on full portraits and **6.13 years** on detected-face crops from this project's UTKFace test split. Its accuracy on physical-webcam images has not been measured.
 
 ## Demo
 
@@ -172,11 +172,14 @@ Run these commands from the project root:
 .\.venv\Scripts\python.exe -m ml.train --benchmark
 .\.venv\Scripts\python.exe -m ml.train
 .\.venv\Scripts\python.exe -m ml.finetune
+.\.venv\Scripts\python.exe -m ml.improve --epochs 6
 ```
 
 **Baseline.** MobileNetV3 Small starts with torchvision ImageNet weights. Its frozen backbone produces 576 features per portrait, cached locally. A `576 → 128 → 1` head learns to predict age. Training uses Smooth L1 loss and AdamW; validation MAE selects the checkpoint, with early stopping after ten epochs without improvement.
 
 **Fine-tuning.** The final feature blocks and regression head train for three more epochs. Early filters and batch-normalization statistics stay frozen. Training images receive mild horizontal flips, affine changes, lighting/color variation and occasional blur. Validation selects the candidate; promotion requires at least a **0.1-year** MAE improvement over the preserved baseline. Test evaluation happens after that decision.
+
+**Crop-aware improvement.** `ml.improve` starts from the active checkpoint and preserves it in a timestamped `models/improvement-*/` folder. It mixes full portraits with the same face crops used by Flask, samples underrepresented age decades more often, and trains feature blocks 6 onward with a cosine learning-rate schedule. Validation is measured on both full portraits and detected-face crops. Promotion requires a crop MAE improvement of at least 0.1 years, no overall full-portrait regression, and no age-band regression greater than one year on either view. The test split is loaded only after checkpoint selection.
 
 The first baseline run downloads pretrained weights. Feature caches are reused when the manifest fingerprint and image size match. If you change backbone weights or preprocessing code, remove the generated `data/processed/*-features.pt` caches before rerunning baseline training. Fine-tuning does not use those caches.
 
@@ -187,7 +190,9 @@ The first baseline run downloads pretrained weights. Feature caches are reused w
 | `models/baseline/` | Baseline checkpoint and report preserved by the first fine-tuning run. |
 | `models/candidate.pt` | Candidate selected during fine-tuning. |
 | `models/evaluation.json` | Active model metrics. |
-| `models/finetune-report.json` | Baseline comparison, epoch results and promotion decision. |
+| `models/finetune-report.json` | Initial fine-tuning comparison, epoch results and promotion decision. |
+| `models/improvement-report.json` | Crop-aware validation, detector coverage counts and selected-checkpoint test results. |
+| `models/improvement-*/` | Previous active weights/report, progress and selected candidate for each improvement run. |
 
 Re-running baseline training replaces the active checkpoint. The preserved baseline folder is created only once; keep track of it if you later change datasets or training settings.
 
@@ -195,25 +200,28 @@ Re-running baseline training replaces the active checkpoint. The preserved basel
 
 MAE is the average absolute difference between predicted and labeled age. Lower is better. It is not an accuracy percentage or a guarantee for any individual prediction.
 
-| Model | Validation MAE | Test MAE |
+| Model / input | Validation MAE | Test MAE |
 | --- | ---: | ---: |
-| Frozen-backbone baseline | 7.78 years | 7.70 years |
-| Partial fine-tuning, active | **6.96 years** | **6.72 years** |
+| Frozen-backbone baseline, full portrait | 7.78 years | 7.70 years |
+| Initial partial fine-tuning, full portrait | 6.96 years | 6.72 years |
+| Crop-aware fine-tuning, active, full portrait | **5.91 years** | **5.72 years** |
+| Previous model, detected-face crop | 7.36 years | 7.08 years |
+| Crop-aware fine-tuning, active, detected-face crop | **6.11 years** | **6.13 years** |
 
-The test set contains **3,470 images**. Overall test MAE fell by **12.6%**, but the change was not uniform across age groups:
+The full test set contains **3,470 images**. The detector found exactly one face in **1,914** of them; crop scores cover only that subset. Crop test MAE improved by **13.4%**. Epoch 6 was selected using validation scores before test evaluation.
 
-| Labeled age | Test images | Baseline MAE | Active MAE |
+| Labeled age | Full test images | Active full-portrait MAE | Active crop MAE |
 | --- | ---: | ---: | ---: |
-| 0–12 | 508 | 7.16 | 4.23 |
-| 13–19 | 169 | 8.59 | 6.30 |
-| 20–39 | 1,736 | 5.11 | 4.44 |
-| 40–59 | 665 | **9.50** | 9.85 |
-| 60–79 | 293 | 15.40 | 14.46 |
-| 80–120 | 99 | 19.31 | 16.43 |
+| 0-12 | 508 | 3.43 | 5.72 |
+| 13-19 | 169 | 6.12 | 5.40 |
+| 20-39 | 1,736 | 4.64 | 4.66 |
+| 40-59 | 665 | 7.52 | 7.78 |
+| 60-79 | 293 | 9.94 | 11.37 |
+| 80-120 | 99 | 11.11 | 17.12 |
 
-All MAEs above are in years. The 40–59 group became slightly worse; older groups remain substantially less accurate. Complete snapshots are in [model-evaluation.json](docs/model-evaluation.json) and [model-comparison.json](docs/model-comparison.json).
+All MAEs above are in years. Older groups remain less accurate. Full and crop columns cover different subsets. Complete active metrics are in [model-evaluation.json](docs/model-evaluation.json), the latest comparison is in [model-improvement.json](docs/model-improvement.json), and the initial fine-tuning comparison remains in [model-comparison.json](docs/model-comparison.json).
 
-On the development machine—an Intel i7-10610U with roughly 32 GB RAM—baseline training, feature extraction and evaluation took about **160 seconds**. Fine-tuning and evaluation took about **647 seconds**. The active model averaged **11.36 ms** for a single forward pass over 20 warmed CPU runs. That excludes decoding, face detection, request handling and the multi-frame scan; it is not end-to-end camera latency.
+Crop-aware training and evaluation took about **2,090 seconds**. The active model averaged **17.59 ms** for a single forward pass over 20 warmed CPU runs. This excludes decoding, face detection, request handling and the multi-frame scan; it is not end-to-end camera latency.
 
 ### What these results do not establish
 
@@ -270,7 +278,7 @@ npm.cmd test
 
 The browser tests start or reuse the production frontend. Build it first. Without `RUN_INTEGRATION=1`, the real-model integration test is skipped. Tests that need a trained checkpoint are also skipped if it is absent.
 
-The documentation refresh was checked against **15 passing backend tests** and **11 passing browser tests**. Coverage includes input validation, quality gates, real-model loading, face detection, scan completion, cancellation, retry, stale responses, upload, theme persistence and mobile overflow.
+The documentation refresh was checked against **27 passing backend tests** and **15 passing browser tests**. Coverage includes input validation, quality gates, real-model loading, face detection, scan completion, cancellation, retry, stale responses, upload, theme persistence and mobile overflow.
 
 Most camera UI tests use synthetic streams and mocked API responses so state transitions can be checked deterministically. The integration test and the README recording use the real backend and model. A physical-webcam check remains a separate manual task.
 
