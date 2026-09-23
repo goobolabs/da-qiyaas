@@ -1,0 +1,171 @@
+{
+  "change": "Replaced the Haar cascade face detector with OpenCV Zoo YuNet.",
+  "recorded": "2026-09-12T03:03:59Z",
+  "detector": {
+    "previous": "haarcascade_frontalface_default, scaleFactor 1.1, minNeighbors 5, minSize 40",
+    "current": "face_detection_yunet_2023mar.onnx, score 0.7, NMS 0.3",
+    "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+    "crop_margin": 0.15
+  },
+  "model_evaluated": "mobilenet_v3_large_balanced_crops (active checkpoint, unchanged)",
+  "selection_rule": "Chosen on validation only: same-image crop MAE must improve by at least 0.1 years with no age-band regression above 1 year. The test split was evaluated afterwards.",
+  "validation": {
+    "single_face_coverage": {
+      "haar": 1904,
+      "yunet": 3464,
+      "images": 3467
+    },
+    "shared_subset_crop_mae": {
+      "haar": 5.932443141937256,
+      "yunet": 5.675141334533691
+    },
+    "full_coverage_crop_mae": {
+      "haar": {
+        "mae_years": 5.932443141937256,
+        "count": 1904,
+        "age_bands": {
+          "0-12": {
+            "count": 154,
+            "mae": 5.315707683563232
+          },
+          "13-19": {
+            "count": 115,
+            "mae": 6.314952373504639
+          },
+          "20-39": {
+            "count": 1065,
+            "mae": 4.226325511932373
+          },
+          "40-59": {
+            "count": 373,
+            "mae": 8.396520614624023
+          },
+          "60-79": {
+            "count": 148,
+            "mae": 9.940964698791504
+          },
+          "80-120": {
+            "count": 49,
+            "mae": 13.190420150756836
+          }
+        }
+      },
+      "yunet": {
+        "mae_years": 5.679290771484375,
+        "count": 3464,
+        "age_bands": {
+          "0-12": {
+            "count": 508,
+            "mae": 3.7556686401367188
+          },
+          "13-19": {
+            "count": 165,
+            "mae": 6.180858612060547
+          },
+          "20-39": {
+            "count": 1736,
+            "mae": 4.287333965301514
+          },
+          "40-59": {
+            "count": 664,
+            "mae": 8.382782936096191
+          },
+          "60-79": {
+            "count": 293,
+            "mae": 9.193532943725586
+          },
+          "80-120": {
+            "count": 98,
+            "mae": 10.639350891113281
+          }
+        }
+      }
+    },
+    "margin_sweep": {
+      "0.15": 5.679290771484375,
+      "0.20": 5.686962127685547,
+      "0.25": 5.697048187255859,
+      "0.30": 5.699965476989746,
+      "0.35": 5.700809955596924
+    }
+  },
+  "test": {
+    "single_face_coverage": {
+      "haar": 1914,
+      "yunet": 3465,
+      "images": 3470
+    },
+    "shared_subset_crop_mae": {
+      "haar": 6.066367149353027,
+      "yunet": 5.719268798828125
+    },
+    "full_coverage_crop_mae": {
+      "haar": {
+        "mae_years": 6.066367149353027,
+        "count": 1914,
+        "age_bands": {
+          "0-12": {
+            "count": 155,
+            "mae": 5.863664627075195
+          },
+          "13-19": {
+            "count": 109,
+            "mae": 5.370155334472656
+          },
+          "20-39": {
+            "count": 1091,
+            "mae": 4.429509162902832
+          },
+          "40-59": {
+            "count": 384,
+            "mae": 8.218017578125
+          },
+          "60-79": {
+            "count": 141,
+            "mae": 11.182148933410645
+          },
+          "80-120": {
+            "count": 34,
+            "mae": 16.229822158813477
+          }
+        }
+      },
+      "yunet": {
+        "mae_years": 5.681178569793701,
+        "count": 3465,
+        "age_bands": {
+          "0-12": {
+            "count": 506,
+            "mae": 3.644869089126587
+          },
+          "13-19": {
+            "count": 169,
+            "mae": 5.510249614715576
+          },
+          "20-39": {
+            "count": 1735,
+            "mae": 4.350998878479004
+          },
+          "40-59": {
+            "count": 665,
+            "mae": 8.111989974975586
+          },
+          "60-79": {
+            "count": 293,
+            "mae": 10.010929107666016
+          },
+          "80-120": {
+            "count": 97,
+            "mae": 10.650382041931152
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "No model weights were retrained; only the crop geometry at detection time changed.",
+    "UTKFace portraits are already tightly cropped, so coverage gains on camera frames may differ.",
+    "The existing test split is reused and is not an external holdout.",
+    "Detection latency was not separately benchmarked against the Haar cascade."
+  ]
+}

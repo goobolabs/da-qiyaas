@@ -12,7 +12,9 @@ from werkzeug.exceptions import RequestEntityTooLarge
 
 from ml.model import ROOT, load_model, preprocess
 from ml.face_crop import crop_face
+from ml.face_detect import create_detector, detect_faces
 from backend.speech import speech_blueprint
+from backend.feedback import feedback_blueprint
 
 Image.MAX_IMAGE_PIXELS = 16_000_000
 
@@ -35,9 +37,7 @@ class Predictor:
         self.lock = threading.Lock()
         self.model = None
         self.model_path = model_path or ROOT / 'models' / 'age_model.pt'
-        self.detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        if self.detector.empty():
-            raise RuntimeError('Face detector could not be loaded.')
+        self.detector = create_detector()
         self.transform = preprocess()
         if self.model_path.exists():
             self.model = load_model(self.model_path)
@@ -53,12 +53,12 @@ class Predictor:
         image.thumbnail((1280, 1280))
         with self.lock:
             gray = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2GRAY)
-            faces = self.detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40))
+            faces = detect_faces(self.detector, image)
             if len(faces) == 0:
                 raise InputError('NO_FACE', 'No clear face found. Face forward and improve the lighting.')
             if len(faces) > 1:
                 raise InputError('MULTIPLE_FACES', 'More than one face found. Keep only one face in the frame.')
-            x, y, width, height = map(int, faces[0])
+            x, y, width, height = faces[0]
             box = {'x': x / image.width, 'y': y / image.height, 'width': width / image.width, 'height': height / image.height}
             quality = check_camera_quality(gray[y:y + height, x:x + width], box) if camera else None
             if scan_only:
@@ -114,6 +114,7 @@ def decode_image(raw):
 def create_app(predictor=None):
     app = Flask(__name__)
     app.register_blueprint(speech_blueprint())
+    app.register_blueprint(feedback_blueprint(ROOT / 'data' / 'feedback.sqlite3', decode_image))
     app.request_class = MemoryRequest
     app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024 + 64 * 1024
     service = predictor if predictor is not None else Predictor()

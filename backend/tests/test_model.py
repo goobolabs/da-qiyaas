@@ -6,7 +6,31 @@ import torch
 from PIL import Image
 
 from backend.app import Predictor, create_app
-from ml.model import ROOT, load_model, preprocess
+from ml.model import AgeModel, IMAGE_SIZE, ROOT, load_model, preprocess
+
+
+@pytest.mark.parametrize('backbone', ['small', 'large'])
+def test_checkpoint_architecture_round_trip(tmp_path, backbone):
+    torch.set_num_threads(2)
+    original = AgeModel(backbone=backbone).eval()
+    path = tmp_path / 'model.pt'
+    torch.save({'state_dict': original.state_dict(), 'image_size': IMAGE_SIZE,
+                'architecture': f'mobilenet_v3_{backbone}_balanced_crops'}, path)
+    restored = load_model(path)
+    sample = torch.randn(2, 3, IMAGE_SIZE, IMAGE_SIZE)
+    with torch.inference_mode():
+        expected, actual = original(sample), restored(sample)
+    assert restored.backbone == backbone
+    assert actual.shape == (2,)
+    assert torch.isfinite(actual).all()
+    torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+
+
+def test_checkpoint_rejects_unknown_architecture(tmp_path):
+    path = tmp_path / 'unknown.pt'
+    torch.save({'image_size': IMAGE_SIZE, 'architecture': 'unsupported'}, path)
+    with pytest.raises(ValueError, match='Unsupported checkpoint architecture'):
+        load_model(path)
 
 
 @pytest.mark.skipif(not (ROOT / 'models' / 'age_model.pt').exists(), reason='Run training first')

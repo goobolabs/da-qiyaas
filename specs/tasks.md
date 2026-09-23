@@ -1,4 +1,4 @@
-﻿# Implementation tasks
+# Implementation tasks
 
 Status: version 1 implemented and verified following user authorization on 2026-09-09.
 
@@ -40,3 +40,39 @@ These follow-ups do not change the completed implementation scope; physical-came
 - [x] Add persistent dark/light mode matching Goobo Labs branding.
 - [x] Verify production build, backend tests, browser flows and desktop/mobile dark views.
 - [ ] Future: obtain a separate labeled camera dataset to measure real-webcam accuracy.
+
+## Crop-aware and Large backbone accuracy work
+
+- [x] Audit predictions across six age bands and reproduce the runtime crop/full-portrait mismatch.
+- [x] Preserve the active checkpoint and metrics before every training run.
+- [x] Add crop-aware balanced fine-tuning with full-portrait and detected-face validation.
+- [x] Make the checkpoint format and loader carry the backbone so Small and Large both load.
+- [x] Train a MobileNetV3 Large candidate with a warmed head and blocks 10 onward.
+- [x] Gate promotion on crop, full-portrait and age-band validation, then evaluate the test split once.
+- [x] Measure alternating warmed CPU latency for the candidate and the incumbent.
+- [x] Promote the Large checkpoint, restart Flask and confirm varied live API estimates.
+- [x] Update portable metrics under docs/ and the README results, including the speed cost.
+- [ ] Future: sweep Large learning rates, unfrozen depth and seeds; one run is not a tuned result.
+
+## YuNet face detector
+
+- [x] Measure Haar single-face coverage and confirm it rejects nearly half the portraits.
+- [x] Add a shared detector module with pinned, checksum-verified YuNet weights fetched on first use.
+- [x] Key cached face boxes by detector identity so older boxes are rebuilt.
+- [x] Use the one detector in Flask, training and evaluation.
+- [x] Compare Haar and YuNet on validation, including a crop-margin sweep, before touching the test split.
+- [x] Evaluate the test split after the decision and report coverage separately from error.
+- [x] Restart Flask and confirm portraits the old detector rejected now return estimates.
+- [x] Record the comparison under docs/ and document the change.
+- [ ] Future: retrain crop-aware on YuNet boxes; the active weights still come from Haar crops.
+- [ ] Future: benchmark detection latency and camera-frame coverage, which cropped portraits do not predict.
+
+## Somali speech without a speech account
+
+- [x] Confirm both Somali neural voices are reachable through the keyless Edge read-aloud service.
+- [x] Add a reproducible generator for the 121 fixed sentences, with MP3 and size validation.
+- [x] Serve local clips ahead of Azure, and report the active source from the availability route.
+- [x] Keep Azure as an optional fallback so an existing key still works.
+- [x] Cover the new path with tests that isolate the clip directory from locally generated audio.
+- [x] Generate the clips, restart Flask and confirm playback in the browser with no credentials set.
+- [ ] Future: a Somali speaker should listen to the clips and confirm pronunciation of every number.

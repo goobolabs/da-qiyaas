@@ -1,4 +1,4 @@
-﻿# Verification — version 1
+# Verification — version 1
 
 Date: 2026-09-09.
 
@@ -113,3 +113,45 @@ Initialized a local main branch and reviewed files eligible for version control.
 - Production build and TypeScript checks passed. README links and GIF validation passed.
 - Local headless Edge exposed three en-GB voices and no Somali voice. The backend reports speech unavailable because Azure credentials are not configured. Actual Azure synthesis and Somali pronunciation have not been tested.
 - On Windows the first Playwright run needed its finished test server stopped manually to complete teardown; assertions passed.
+
+## MobileNetV3 Large comparison — 2026-09-12
+
+- Incumbent Small checkpoint and metrics were copied into models/large-20260910-044444-150309/ and hashed before training; the hash was rechecked before promotion.
+- The regression head warmed for 23 of 60 allowed epochs on frozen full/crop embeddings, then blocks 10 onward fine-tuned for six epochs.
+- Validation crop MAE by epoch: 7.813, 7.229, 7.071, 6.393, 6.454, 5.932, 6.056. Only epoch 5 passed the crop, full-portrait and age-band gates, and it was selected.
+- Selected validation: 5.932 crop and 5.731 full, against the incumbent's 6.105 and 5.905. Test after selection: 6.066 crop and 5.687 full, against 6.133 and 5.722.
+- Age-band results are not uniformly better. Full-portrait 40-59 rose from 7.52 to 8.04 years and 0-12 from 3.43 to 3.75; crop 80-120 fell from 17.12 to 16.23.
+- Warmed CPU latency over 100 alternating runs on four threads: 43.11 ms mean for Large against 26.42 ms for Small, medians 38.27 and 21.89. The accuracy gain costs roughly 1.6 times the inference time.
+- Head warm-up, fine-tuning, latency and evaluation elapsed 5,514.8 seconds. Full comparison: docs/model-large-comparison.json.
+- Backend suite: 30 passed, including new round-trip tests that save and reload both Small and Large checkpoints and reject an unknown architecture string.
+- Flask was restarted and reported model_ready. Twelve real uploads spanning all six age bands returned twelve distinct estimates; no constant output appeared.
+- README link and metrics-snapshot check passed with 14 local links and no broken references.
+- This is one seed and one schedule on a reused test split. It does not establish the best Large configuration or any physical-webcam accuracy.
+
+## YuNet face detector — 2026-09-12
+
+- Replaced the Haar cascade with OpenCV Zoo YuNet 2023mar, pinned by SHA-256 and stored in the ignored models/pretrained/ folder.
+- Validation single-face coverage rose from 1,904 to 3,464 of 3,467 portraits. Test coverage rose from 1,914 to 3,465 of 3,470.
+- On the 1,904 validation images both detectors found, crop MAE fell from 5.932 to 5.675 years using the unchanged active checkpoint.
+- Every validation age band improved. The largest gain was 80-120, from 13.19 to 10.91 years; the smallest was 20-39, at 0.10 years.
+- A crop-margin sweep from 0.15 to 0.35 confirmed the existing 0.15 margin is best, so shared crop geometry was left alone.
+- Test split, evaluated after the decision: crop MAE 6.066 to 5.719 on the shared 1,914 images, and 5.681 across YuNet's own 3,465.
+- No model weights were retrained. The active checkpoint was still fine-tuned on Haar crops, so a crop-aware rerun on YuNet boxes should gain more.
+- Stale Haar box caches were deleted, and the cache key now includes the detector identity so they cannot be silently reused.
+- Backend suite: 33 passed, including three new detector tests covering the checksum, a blank image and box bounds on real portraits.
+- Flask was restarted. Six portraits the old detector rejected outright now return estimates. One labeled 12 returned 10 years in the browser.
+- README link and metrics-snapshot check passed with 15 local links.
+- Coverage measured on already-cropped UTKFace portraits does not establish the same gain on live camera frames.
+
+## Somali speech without Azure — 2026-09-12
+
+- The user could not obtain Azure Speech credentials, so speech now reads pre-generated clips from disk and Azure became an optional fallback.
+- Both Somali neural voices, so-SO-UbaxNeural and so-SO-MuuseNeural, are reachable through the Edge read-aloud service with no API key.
+- scripts/generate_speech.py produced all 121 clips, 2,587,824 bytes in total, between 19,008 and 23,616 bytes each.
+- Every clip starts with an MPEG frame header, every checksum matches the manifest, and all 121 are distinct, so no age plays another age's number.
+- Flask was restarted with no AZURE_SPEECH_KEY set. The availability route reported available true, source local, 121 clips.
+- A direct POST for age 25 returned 200 with audio/mpeg and 20,592 bytes, byte-identical to the clip on disk.
+- In the browser the estimate of 25 played to completion and the panel moved to its replay state. The network log shows POST /api/speech returning 200.
+- Backend suite: 37 passed, including four new tests for local clips, precedence over Azure, the size limit and generated-clip coverage.
+- The clip directory is isolated in tests, so results do not depend on whether a machine has generated audio.
+- Pronunciation quality was not judged. No Somali speaker has listened to the clips, and playback here was verified by player state and network status, not by ear.

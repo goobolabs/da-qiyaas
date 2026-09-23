@@ -1,130 +1,146 @@
 {
-  "model": "mobilenet_v3_large_balanced_crops",
-  "test": {
-    "mae_years": 5.687071323394775,
-    "count": 3470,
-    "age_bands": {
-      "0-12": {
-        "count": 508,
-        "mae": 3.7510414123535156
-      },
-      "13-19": {
-        "count": 169,
-        "mae": 5.4853596687316895
-      },
-      "20-39": {
-        "count": 1736,
-        "mae": 4.359670162200928
-      },
-      "40-59": {
-        "count": 665,
-        "mae": 8.041583061218262
-      },
-      "60-79": {
-        "count": 293,
-        "mae": 9.936112403869629
-      },
-      "80-120": {
-        "count": 99,
-        "mae": 10.851086616516113
+  "candidate_model": "mobilenet_v3_large_balanced_crops",
+  "seed": 209,
+  "pretrained_weights": "MobileNet_V3_Large_Weights.IMAGENET1K_V2",
+  "baseline_checkpoint_sha256": "5a21c7da14d0dda85db6cb2408c80b19f0eef430bb956452a25607cdbb383b53",
+  "baseline_validation": {
+    "full": {
+      "mae_years": 5.905063629150391,
+      "count": 3467,
+      "age_bands": {
+        "0-12": {
+          "count": 509,
+          "mae": 3.722839117050171
+        },
+        "13-19": {
+          "count": 166,
+          "mae": 6.426090717315674
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.672974586486816
+        },
+        "40-59": {
+          "count": 664,
+          "mae": 8.132182121276855
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.553542137145996
+        },
+        "80-120": {
+          "count": 99,
+          "mae": 12.120787620544434
+        }
+      }
+    },
+    "crop": {
+      "mae_years": 6.10520601272583,
+      "count": 1904,
+      "age_bands": {
+        "0-12": {
+          "count": 154,
+          "mae": 5.356388092041016
+        },
+        "13-19": {
+          "count": 115,
+          "mae": 6.467900276184082
+        },
+        "20-39": {
+          "count": 1065,
+          "mae": 4.530527114868164
+        },
+        "40-59": {
+          "count": 373,
+          "mae": 8.192509651184082
+        },
+        "60-79": {
+          "count": 148,
+          "mae": 10.226806640625
+        },
+        "80-120": {
+          "count": 49,
+          "mae": 13.49462604522705
+        }
       }
     }
   },
-  "validation": {
-    "mae_years": 5.730679035186768,
-    "count": 3467,
-    "age_bands": {
-      "0-12": {
-        "count": 509,
-        "mae": 3.892747640609741
-      },
-      "13-19": {
-        "count": 166,
-        "mae": 6.249889850616455
-      },
-      "20-39": {
-        "count": 1736,
-        "mae": 4.323190212249756
-      },
-      "40-59": {
-        "count": 664,
-        "mae": 8.327606201171875
-      },
-      "60-79": {
-        "count": 293,
-        "mae": 9.1271333694458
-      },
-      "80-120": {
-        "count": 99,
-        "mae": 11.52053165435791
+  "selected_validation": {
+    "full": {
+      "mae_years": 5.730679035186768,
+      "count": 3467,
+      "age_bands": {
+        "0-12": {
+          "count": 509,
+          "mae": 3.892747640609741
+        },
+        "13-19": {
+          "count": 166,
+          "mae": 6.249889850616455
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.323190212249756
+        },
+        "40-59": {
+          "count": 664,
+          "mae": 8.327606201171875
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.1271333694458
+        },
+        "80-120": {
+          "count": 99,
+          "mae": 11.52053165435791
+        }
+      }
+    },
+    "crop": {
+      "mae_years": 5.932443141937256,
+      "count": 1904,
+      "age_bands": {
+        "0-12": {
+          "count": 154,
+          "mae": 5.315707683563232
+        },
+        "13-19": {
+          "count": 115,
+          "mae": 6.314952373504639
+        },
+        "20-39": {
+          "count": 1065,
+          "mae": 4.226325511932373
+        },
+        "40-59": {
+          "count": 373,
+          "mae": 8.396520614624023
+        },
+        "60-79": {
+          "count": 148,
+          "mae": 9.940964698791504
+        },
+        "80-120": {
+          "count": 49,
+          "mae": 13.190420150756836
+        }
       }
     }
   },
-  "runtime_crop_test": {
-    "mae_years": 6.066367149353027,
-    "count": 1914,
-    "age_bands": {
-      "0-12": {
-        "count": 155,
-        "mae": 5.863664627075195
-      },
-      "13-19": {
-        "count": 109,
-        "mae": 5.370155334472656
-      },
-      "20-39": {
-        "count": 1091,
-        "mae": 4.429509162902832
-      },
-      "40-59": {
-        "count": 384,
-        "mae": 8.218017578125
-      },
-      "60-79": {
-        "count": 141,
-        "mae": 11.182148933410645
-      },
-      "80-120": {
-        "count": 34,
-        "mae": 16.229822158813477
-      }
+  "selected_epoch": 5,
+  "accuracy_gate_passed": true,
+  "cpu_latency": {
+    "previous": {
+      "median_ms": 21.89060000000609,
+      "mean_ms": 26.41572000018641
+    },
+    "candidate": {
+      "median_ms": 38.266599999587925,
+      "mean_ms": 43.110278000076505
     }
   },
-  "runtime_crop_validation": {
-    "mae_years": 5.932443141937256,
-    "count": 1904,
-    "age_bands": {
-      "0-12": {
-        "count": 154,
-        "mae": 5.315707683563232
-      },
-      "13-19": {
-        "count": 115,
-        "mae": 6.314952373504639
-      },
-      "20-39": {
-        "count": 1065,
-        "mae": 4.226325511932373
-      },
-      "40-59": {
-        "count": 373,
-        "mae": 8.396520614624023
-      },
-      "60-79": {
-        "count": 148,
-        "mae": 9.940964698791504
-      },
-      "80-120": {
-        "count": 49,
-        "mae": 13.190420150756836
-      }
-    }
-  },
-  "baseline_test_mae": 5.721778392791748,
-  "baseline_runtime_crop_test_mae": 6.132503986358643,
-  "cpu_model_latency_ms": 43.110278000076505,
-  "previous_cpu_model_latency_ms": 26.41572000018641,
-  "training_seconds": 5514.757459899999,
+  "promoted": true,
+  "selection_rule": "Crop validation MAE improves at least 0.1 years; full MAE does not worsen; no age-band MAE worsens more than 1 year on either view.",
   "history": [
     {
       "epoch": 0,
@@ -589,11 +605,137 @@
       "accuracy_gate_passed": false
     }
   ],
+  "head_epochs_completed": 23,
   "limitations": [
     "Existing test split is reused, not an external holdout.",
     "Crop metrics cover single-face detections only.",
     "No labeled physical-webcam evaluation.",
     "Near duplicates and identity overlap may remain.",
     "One seed and training schedule; this does not establish the best possible Large model."
-  ]
+  ],
+  "candidate_test": {
+    "full": {
+      "mae_years": 5.687071323394775,
+      "count": 3470,
+      "age_bands": {
+        "0-12": {
+          "count": 508,
+          "mae": 3.7510414123535156
+        },
+        "13-19": {
+          "count": 169,
+          "mae": 5.4853596687316895
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.359670162200928
+        },
+        "40-59": {
+          "count": 665,
+          "mae": 8.041583061218262
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.936112403869629
+        },
+        "80-120": {
+          "count": 99,
+          "mae": 10.851086616516113
+        }
+      }
+    },
+    "crop": {
+      "mae_years": 6.066367149353027,
+      "count": 1914,
+      "age_bands": {
+        "0-12": {
+          "count": 155,
+          "mae": 5.863664627075195
+        },
+        "13-19": {
+          "count": 109,
+          "mae": 5.370155334472656
+        },
+        "20-39": {
+          "count": 1091,
+          "mae": 4.429509162902832
+        },
+        "40-59": {
+          "count": 384,
+          "mae": 8.218017578125
+        },
+        "60-79": {
+          "count": 141,
+          "mae": 11.182148933410645
+        },
+        "80-120": {
+          "count": 34,
+          "mae": 16.229822158813477
+        }
+      }
+    }
+  },
+  "baseline_test": {
+    "full": {
+      "mae_years": 5.721778392791748,
+      "count": 3470,
+      "age_bands": {
+        "0-12": {
+          "count": 508,
+          "mae": 3.4315624237060547
+        },
+        "13-19": {
+          "count": 169,
+          "mae": 6.1185102462768555
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.644955158233643
+        },
+        "40-59": {
+          "count": 665,
+          "mae": 7.522292137145996
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.938304901123047
+        },
+        "80-120": {
+          "count": 99,
+          "mae": 11.105237007141113
+        }
+      }
+    },
+    "crop": {
+      "mae_years": 6.132503986358643,
+      "count": 1914,
+      "age_bands": {
+        "0-12": {
+          "count": 155,
+          "mae": 5.724302291870117
+        },
+        "13-19": {
+          "count": 109,
+          "mae": 5.404990196228027
+        },
+        "20-39": {
+          "count": 1091,
+          "mae": 4.6644487380981445
+        },
+        "40-59": {
+          "count": 384,
+          "mae": 7.778465270996094
+        },
+        "60-79": {
+          "count": 141,
+          "mae": 11.369726181030273
+        },
+        "80-120": {
+          "count": 34,
+          "mae": 17.12428855895996
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 5514.7750938
 }

@@ -21,6 +21,7 @@ def test_validation_gate_rejects_overall_or_age_band_regressions():
                 for view, value in [('full', full), ('crop', crop)]}
     baseline = scores(7, 8, 10)
     assert eligible(scores(6, 7, 9), baseline)
+    assert eligible(scores(7, 7.9, 11), baseline)
     assert not eligible(scores(7.1, 7, 9), baseline)
     assert not eligible(scores(6, 7.95, 9), baseline)
     assert not eligible(scores(6, 7, 11.1), baseline)

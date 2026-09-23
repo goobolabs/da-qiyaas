@@ -12,19 +12,20 @@ from datetime import datetime, timezone
 from threading import local
 
 import cv2
-import numpy as np
 import torch
 from PIL import Image, ImageOps
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision import transforms
 
 from ml.face_crop import crop_face
+from ml.face_detect import DETECTOR_ID, create_detector, detect_faces
 from ml.model import ROOT, IMAGE_SIZE, load_model
 from ml.train import Portraits, metrics
 
 
 def face_boxes(rows, split):
-    fingerprint = hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
+    # The detector id is part of the key, so boxes from an older detector are never reused.
+    fingerprint = hashlib.sha256(json.dumps([DETECTOR_ID, rows], sort_keys=True).encode()).hexdigest()
     path = ROOT / 'data/processed' / f'{split}-face-boxes.json'
     if path.exists():
         cache = json.loads(path.read_text())
@@ -35,13 +36,12 @@ def face_boxes(rows, split):
 
     def detect(row):
         if not hasattr(state, 'detector'):
-            state.detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+            state.detector = create_detector()
         with Image.open(ROOT / row['path']) as source:
             image = ImageOps.exif_transpose(source).convert('RGB')
             image.thumbnail((1280, 1280))
-            gray = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2GRAY)
-            found = state.detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40))
-            return list(map(int, found[0])) if len(found) == 1 else None
+            found = detect_faces(state.detector, image)
+            return list(found[0]) if len(found) == 1 else None
     boxes = []
     with ThreadPoolExecutor(max_workers=4) as pool:
         for index, box in enumerate(pool.map(detect, rows)):
@@ -90,7 +90,7 @@ def datasets(rows, boxes):
 
 
 def eligible(scores, baseline):
-    return (scores['crop']['mae_years'] < baseline['crop']['mae_years'] - .1
+    return (scores['crop']['mae_years'] <= baseline['crop']['mae_years'] - .1
             and scores['full']['mae_years'] <= baseline['full']['mae_years']
             and all(scores[view]['age_bands'][band]['mae'] <= values['mae'] + 1
                     for view in ('full', 'crop')
@@ -122,10 +122,11 @@ def main():
                         sampler=WeightedRandomSampler(weights, len(training), replacement=True))
     for parameter in model.features.parameters():
         parameter.requires_grad = False
-    for parameter in model.features[6:].parameters():
+    first_block = 10 if model.backbone == 'large' else 6
+    for parameter in model.features[first_block:].parameters():
         parameter.requires_grad = True
     optimizer = torch.optim.AdamW([
-        {'params': model.features[6:].parameters(), 'lr': .0001},
+        {'params': model.features[first_block:].parameters(), 'lr': .0001},
         {'params': model.head.parameters(), 'lr': .0002},
     ], weight_decay=.01)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=.00001)
@@ -157,7 +158,7 @@ def main():
                              'Near duplicates and identity overlap may remain.']}
     if best_state is not None:
         model.load_state_dict(best_state)
-        checkpoint = {'state_dict': best_state, 'image_size': IMAGE_SIZE, 'architecture': 'mobilenet_v3_small_balanced_crops', 'seed': 109, 'age_range': [0, 120]}
+        checkpoint = {'state_dict': best_state, 'image_size': IMAGE_SIZE, 'architecture': f'mobilenet_v3_{model.backbone}_balanced_crops', 'seed': 109, 'age_range': [0, 120]}
         torch.save(checkpoint, directory / 'selected.pt')
         test_rows = read('test')  # Selection is fixed before loading the test split.
         test_data = datasets(test_rows, face_boxes(test_rows, 'test'))

@@ -27,6 +27,7 @@ htmlcov/
 # Node dependencies and Next.js build output
 node_modules/
 .next/
+.next-accuracy/
 /frontend/out/
 /frontend/dist/
 /frontend/next-env.d.ts

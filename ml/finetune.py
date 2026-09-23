@@ -101,7 +101,7 @@ def main():
     report = {'baseline_validation': initial, 'selected_validation': selected, 'promoted': promoted, 'history': history,
               'selection_rule': 'Validation MAE must improve by at least 0.1 years.',
               'limitations': ['No labeled physical-webcam data was supplied.', 'Camera-like augmentation does not establish real-camera accuracy.', 'The test split was previously evaluated for the baseline; it is not a newly collected external holdout.', 'Near-duplicate and identity overlap may remain.']}
-    checkpoint = {'state_dict': model.state_dict(), 'image_size': IMAGE_SIZE, 'architecture': 'mobilenet_v3_small_partial_finetune', 'seed': 73, 'age_range': [0, 120]}
+    checkpoint = {'state_dict': model.state_dict(), 'image_size': IMAGE_SIZE, 'architecture': f'mobilenet_v3_{model.backbone}_partial_finetune', 'seed': 73, 'age_range': [0, 120]}
     torch.save(checkpoint, directory / 'candidate.pt')
     if promoted:
         # Evaluate the selected candidate once, after the promotion decision is fixed.

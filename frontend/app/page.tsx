@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaceBox, RECOVERABLE, STABLE_FRAMES, SAMPLE_COUNT, isStable, median } from './camera-scan';
 import ThemeToggle from './theme-toggle';
 import ResultVoice from './result-voice';
+import ResultFeedback from './result-feedback';
 import CameraQuality, { CaptureQuality } from './camera-quality';
 
 type Mode = 'camera' | 'upload';
@@ -66,7 +67,9 @@ export default function Home() {
       const scanning = fromCamera && stableFrames.current < STABLE_FRAMES;
       if (fromCamera) form.append('source', 'camera');
       const response = await fetch(scanning ? '/api/scan' : '/api/predict', { method: 'POST', body: form, signal: controller.signal });
-      const data: Prediction = await response.json();
+      const data: Prediction = await response.json().catch(() => {
+        throw new Error('The age service is not reachable. Start the backend and try again.');
+      });
       if (token !== generation.current) return;
       if (!response.ok) {
         if (fromCamera && RECOVERABLE.includes(data.error?.code || '')) {
@@ -178,7 +181,7 @@ export default function Home() {
         {mode === 'camera' && <CameraQuality quality={quality} stable={steady} />}<div className="actions">{mode === 'camera' ? <button className="primary" disabled={busy} onClick={openCamera}>{phase === 'done' || phase === 'error' ? 'Try Again' : 'Open Camera'} <span>↗</span></button> : <label className="primary upload">{preview ? 'Choose Another Image' : 'Upload Image'} <span>↥</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={event => { void upload(event.target.files?.[0]); event.target.value = ''; }} /></label>}{busy && <button className="cancel" onClick={() => { cancel(); setPhase('idle'); setMessage('Analysis cancelled. You can start again.'); }}>Cancel</button>}</div>
         <p className="input-hint">{mode === 'camera' ? 'Camera access starts only when you choose.' : 'JPG, PNG or WebP · Up to 8 MB'}</p>
       </div>
-      <aside className="result-panel"><div className="eyebrow">THE OUTPUT</div><h2>Your age estimate.</h2><div className={`age-card ${phase === 'done' ? 'complete' : ''}`}><span className="result-label">ESTIMATED AGE</span><div className="age-number">{age ?? '—'}{age !== null && <span>years</span>}</div><span className="result-tag">{phase === 'done' ? 'Analysis complete' : 'Waiting for your portrait'}</span></div><p className={`status ${phase === 'error' ? 'error' : ''}`} role="status" aria-live="polite">{message}</p><ResultVoice age={age} /><div className="tips"><h3>A little preparation. A clearer scan.</h3><p><span>01</span> Face forward in even lighting</p><p><span>02</span> Keep only one face in the frame</p><p><span>03</span> Remove anything covering your face</p></div><p className="disclaimer">An estimate, not a verified age. Results can vary with lighting, image quality and the model.</p></aside>
-    </section><footer><span><span className="privacy-dot" /> Your images are processed without being saved.</span><a href="https://www.goobolabs.so/en">Goobo Labs <span aria-hidden="true">↗</span></a></footer>
+      <aside className="result-panel"><div className="eyebrow">THE OUTPUT</div><h2>Your age estimate.</h2><div className={`age-card ${phase === 'done' ? 'complete' : ''}`}><span className="result-label">ESTIMATED AGE</span><div className="age-number">{age ?? '—'}{age !== null && <span>years</span>}</div><span className="result-tag">{phase === 'done' ? 'Analysis complete' : 'Waiting for your portrait'}</span></div><p className={`status ${phase === 'error' ? 'error' : ''}`} role="status" aria-live="polite">{message}</p><ResultVoice age={age} />{phase === 'done' && age !== null && <ResultFeedback age={age} source={mode} preview={preview} />}<div className="tips"><h3>A little preparation. A clearer scan.</h3><p><span>01</span> Face forward in even lighting</p><p><span>02</span> Keep only one face in the frame</p><p><span>03</span> Remove anything covering your face</p></div><p className="disclaimer">An estimate, not a verified age. Results can vary with lighting, image quality and the model.</p></aside>
+    </section><a className="accuracy-link" href="/accuracy">View accuracy dashboard →</a><footer><span><span className="privacy-dot" /> Photos are saved only with your separate training consent.</span><a href="https://www.goobolabs.so/en">Goobo Labs <span aria-hidden="true">↗</span></a></footer>
   </main>;
 }
