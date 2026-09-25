@@ -4,12 +4,15 @@ test('accuracy dashboard shows recorded metrics and switches evaluation splits',
   await page.goto('/');
   await page.getByRole('link', { name: 'View accuracy dashboard' }).click();
   await expect(page.getByRole('heading', { name: 'Mean absolute error' })).toBeVisible();
-  await expect(page.locator('.accuracy-metrics')).toContainText('5.68');
-  await expect(page.locator('.accuracy-metrics')).toContainText('3,465');
+  const recordedMetrics = page.locator('.accuracy-metrics').filter({
+    has: page.getByRole('heading', { name: 'Mean absolute error', exact: true }),
+  });
+  await expect(recordedMetrics).toContainText('5.68');
+  await expect(recordedMetrics).toContainText('3,465');
   await expect(page.getByRole('row', { name: '80-120 10.65 97' })).toBeVisible();
   await page.getByRole('button', { name: 'Validation', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Validation', exact: true })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.accuracy-metrics')).toContainText('3,464');
+  await expect(recordedMetrics).toContainText('3,464');
   await expect(page.getByRole('row', { name: '80-120 10.64 98' })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

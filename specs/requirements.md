@@ -1,6 +1,6 @@
 # Requirements
 
-Status: the Python application is implemented. Rust migration is proposed on 2026-09-25; this iteration authorizes planning and specification updates only. See [Rust migration](rust-migration.md) for the target and acceptance gates.
+Status: the Python application is implemented. Rust migration implementation was authorized on 2026-09-25, one issue and tested PR at a time. See [Rust migration](rust-migration.md) for the target and acceptance gates.
 
 ## Confirmed
 
@@ -73,4 +73,4 @@ Status: the Python application is implemented. Rust migration is proposed on 202
 - Python remains a runtime dependency for the backend. Flask calls a Rust extension for processing/inference; a standalone Rust CLI performs training without invoking Python. A documented, one-time checkpoint conversion may use the existing Python environment.
 - Preserve the trained model, original dataset, split manifests, feedback database, consent rules, English interface and Somali speech behavior.
 - Validate numerical equivalence before changing training recipes. Measure CPU latency, memory and training throughput; do not promise an accuracy or speed gain from the language change.
-- Keep migration implementation pending until the user requests it. The detailed acceptance criteria in [Rust migration](rust-migration.md) govern this proposed work; previous completed milestones remain historical evidence.
+- Implement migration issues individually and run relevant automated and integration checks before opening each PR, as requested by the user. The detailed acceptance criteria in [Rust migration](rust-migration.md) govern this work; previous completed milestones remain historical evidence.

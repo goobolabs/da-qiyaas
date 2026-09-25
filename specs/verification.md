@@ -2,6 +2,18 @@
 
 Date: 2026-09-09.
 
+## Issue #4 — Python migration reference, 2026-09-25
+
+- Added `python -m ml.migration_baseline capture --name <unique-name>` and `verify <directory>` for immutable local snapshots, NumPy fixtures, offline HTTP contracts and fresh validation metrics. Guide: [docs/migration/README.md](../docs/migration/README.md).
+- Completed `capture --name python-r0-20260925-v2` against the existing `mobilenet_v3_large_balanced_crops` checkpoint. All 25 original artifact/source hashes matched after capture; active weights and split manifests were not modified. The test manifest was preserved but the recorder evaluated no test images.
+- Snapshot verification passed for 149 files. Output includes 12 deterministic train/validation portraits and 53 HTTP contracts. Real portraits, raw per-image predictions, model weights and manifest snapshots remain under the Git-ignored `models/migration-baselines/` directory. Only synthetic contracts and aggregate metadata/metrics are committed.
+- Fresh full validation: 3,467 portraits, MAE 5.730679 years. YuNet crop validation: 3,464 single-face portraits, MAE 5.677675 years; three images had no face and zero had multiple faces. These are current Python reference measurements, not Rust results or physical-camera accuracy. Portable report: [python-reference-summary.json](../docs/migration/python-reference-summary.json).
+- New recorder/contract tests: 8 passed. Complete backend suite: 66 passed in 13.09 seconds, including real model checks and existing feedback/speech behavior.
+- Frontend production build passed with `NEXT_BUILD_DIR=.next-accuracy`, including TypeScript checks. Complete Edge Playwright suite with `RUN_INTEGRATION=1`: 19 passed in 47.7 seconds against an isolated Next.js server on port 3004 and Flask on port 5000 with temporary feedback storage.
+- Existing browser checks exposed two ambiguous selectors after the feedback feature introduced additional status/metrics elements. Scoped the integration status and recorded-evaluation metrics selectors; the real integration fixture now reads validation rather than test portraits. The final full browser run passed after these test corrections.
+- The first capture exposed Windows SQLite handle cleanup in the offline recorder; explicit closure of tracked temporary connections fixed it. The incomplete `python-r0-20260925` local directory is retained without a completion marker. Only the verified `-v2` capture is evidence.
+- No Rust toolchain, model conversion, retraining or live processing-engine switch is included. The PR is ready for review; subsequent issues retain their separate gates.
+
 ## Rust migration planning review — 2026-09-25
 
 - Reviewed the actual Python service, shared model/detector/crop modules, training entry points, current route responsibilities and recorded evaluation reports.

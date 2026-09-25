@@ -1,10 +1,10 @@
 # Implementation tasks
 
-Status: version 1 implemented and verified following user authorization on 2026-09-09. The Rust migration below is proposed; only its planning/specification work is complete.
+Status: version 1 implemented and verified following user authorization on 2026-09-09. Rust migration implementation was authorized on 2026-09-25, with each issue tested before its PR. Issue #4 reference capture is implemented; later issues remain pending.
 
 ## Rust migration — proposed 2026-09-25
 
-Detailed dependencies and acceptance gates: [rust-migration.md](rust-migration.md). Implementation proceeds R0 through R5 after the user requests it.
+Detailed dependencies and acceptance gates: [rust-migration.md](rust-migration.md). Implementation proceeds R0 through R5 in dependency order, with a separate tested PR for each issue.
 
 GitHub issues are published: [tracking issue #12](https://github.com/goobolabs/da-qiyaas/issues/12) links the eight implementation issues (#4–#11) for the user to implement. See [migration-issues.md](migration-issues.md) for their bodies and dependency order. All nine issues were verified open on 2026-09-25.
 
@@ -12,7 +12,7 @@ GitHub issues are published: [tracking issue #12](https://github.com/goobolabs/d
 - [x] Document target stack, checkpoint transition, parity gates, training requirements and rollback.
 - [x] Update requirements and distinguish proposed Rust work from historical Python results.
 - [x] Incorporate the user's clarification: retain the Python/Flask backend and integrate Rust processing/inference through a native extension.
-- [ ] R0: Snapshot artifact/manifest hashes, API fixtures and validation baselines.
+- [x] R0 / #4: Snapshot artifact/manifest hashes, API fixtures and validation baselines; see [reference guide](../docs/migration/README.md).
 - [ ] R0: Validate Windows MSVC/Rust, Python/PyO3/maturin extension import, compatible LibTorch/OpenCV and release forward/backward/detector smoke checks; pin dependencies.
 - [ ] R1: Port shared image validation, EXIF/RGB, resize, YuNet, quality checks, crops and normalization; satisfy fixture parity.
 - [ ] R2: Recreate Small/Large architectures, convert trusted weights once and verify parameter mapping, raw inference parity and reload.
