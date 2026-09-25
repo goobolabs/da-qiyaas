@@ -6,7 +6,7 @@ Status: version 1 implemented and verified following user authorization on 2026-
 
 Detailed dependencies and acceptance gates: [rust-migration.md](rust-migration.md). Implementation proceeds R0 through R5 after the user requests it.
 
-GitHub issue bodies and dependency order are prepared in [migration-issues.md](migration-issues.md): eight implementation issues and one tracking issue for the user to implement. Publication is pending because the GitHub integration rejected issue creation with HTTP 403 on 2026-09-25.
+GitHub issues are published: [tracking issue #12](https://github.com/goobolabs/da-qiyaas/issues/12) links the eight implementation issues (#4–#11) for the user to implement. See [migration-issues.md](migration-issues.md) for their bodies and dependency order. All nine issues were verified open on 2026-09-25.
 
 - [x] Inspect Python processing/training, existing product routes and recorded evaluation evidence.
 - [x] Document target stack, checkpoint transition, parity gates, training requirements and rollback.

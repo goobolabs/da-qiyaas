@@ -1,18 +1,32 @@
-# Rust migration issue drafts
+# Rust migration issues
 
-Status: ready to publish. GitHub creation was attempted on 2026-09-25 but the connected integration returned HTTP 403 (`Resource not accessible by integration`). No new GitHub issue was created.
+Status: published on 2026-09-25. All eight implementation issues and the tracking issue are open on GitHub. Publication succeeded using the existing Git authentication after the connector returned HTTP 403.
 
 Repository: https://github.com/goobolabs/da-qiyaas
 
-The user will implement these issues. Python/Flask remains the backend; Rust handles processing, inference and training. These drafts are self-contained and accompany the [migration specification](rust-migration.md).
+The user will implement these issues. Python/Flask remains the backend; Rust handles processing, inference and training. The issue bodies below accompany the [migration specification](rust-migration.md).
+
+## Published issue index
+
+| Phase | Issue | Dependencies |
+| --- | --- | --- |
+| Tracking | [#12 Migration overview](https://github.com/goobolabs/da-qiyaas/issues/12) | All eight implementation issues |
+| R0 | [#4 Python contracts and parity baselines](https://github.com/goobolabs/da-qiyaas/issues/4) | None |
+| R0 | [#5 Windows Rust/native toolchain](https://github.com/goobolabs/da-qiyaas/issues/5) | None |
+| R1 | [#6 Shared image processing](https://github.com/goobolabs/da-qiyaas/issues/6) | #4, #5 |
+| R2 | [#7 Model import and inference parity](https://github.com/goobolabs/da-qiyaas/issues/7) | #4, #5, #6 |
+| R3 | [#8 Dataset preparation and caches](https://github.com/goobolabs/da-qiyaas/issues/8) | #4, #6 |
+| R3 | [#9 Rust training and evaluation](https://github.com/goobolabs/da-qiyaas/issues/9) | #7, #8 |
+| R4 | [#10 Flask integration](https://github.com/goobolabs/da-qiyaas/issues/10) | #7 |
+| R5 | [#11 Verification and engine cutover](https://github.com/goobolabs/da-qiyaas/issues/11) | #9, #10 |
 
 ## Tracking issue
 
 Title: [Rust migration] Track Rust processing and training with the Python backend
 
-Move computational work into Rust through a PyO3 extension and standalone training CLI while keeping Python/Flask, speech and SQLite application logic. Follow the local `specs/rust-migration.md` specification.
+Move computational work into Rust through a PyO3 extension and standalone training CLI while keeping Python/Flask, speech and SQLite application logic. Follow the `specs/rust-migration.md` specification.
 
-Create the eight implementation issues below and replace the local draft links with their GitHub issue references. Close this tracking issue when their acceptance gates pass and Flask's Rust processing engine plus rollback have been verified.
+The eight implementation issues are published in the index above. The local links below preserve the original issue bodies. Close the tracking issue when their acceptance gates pass and Flask's Rust processing engine plus rollback have been verified.
 
 - [ ] [[Rust migration R0] Capture Python contracts and model parity baselines](#issue-1-baseline)
 - [ ] [[Rust migration R0] Validate Windows Rust, PyO3, LibTorch and OpenCV builds](#issue-2-toolchain)
