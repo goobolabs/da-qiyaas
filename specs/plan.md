@@ -1,6 +1,17 @@
 ﻿# Technical plan
 
-Status: version 1 implemented. See README.md and verification.md for measured results and operating instructions.
+Status: the sections below describe the implemented Python design and earlier iterations. The proposed 2026-09-25 Rust migration is defined in [rust-migration.md](rust-migration.md); implementation has not started. See README.md and verification.md for the existing application's measured results and operating instructions.
+
+## Proposed Rust migration sequence
+
+1. Snapshot current API contracts, artifact hashes, preprocessing outputs and validation baselines; establish compatible Windows Rust/MSVC, LibTorch and OpenCV builds.
+2. Port decoding, YuNet detection, capture checks, crops and normalization into a shared Rust library; prove numerical and error-behavior compatibility.
+3. Recreate Small/Large architectures, convert the current weights and verify Rust inference against Python before retraining.
+4. Port dataset audit, manifest handling, training, fine-tuning, evaluation and candidate selection into a Rust CLI; verify gradients, frozen layers and saved-model reload.
+5. Integrate a Rust native extension into the existing Python/Flask backend; preserve its HTTP, speech, feedback and database responsibilities against captured API contracts.
+6. Run compatibility and performance gates, document extension installation and rollback, then switch Flask's processing engine only after acceptance.
+
+Proposed stack: existing Python/Flask/Waitress backend, PyO3/maturin for its Rust extension, OpenCV Rust bindings, and `tch` with a compatible LibTorch CPU distribution. The Rust training CLI shares the extension's processing/model core. Final dependency pins follow the compatibility experiment. No installation, artifact conversion, training or service change is part of this planning iteration.
 
 ## Structure and responsibilities
 

@@ -2,6 +2,15 @@
 
 Date: 2026-09-09.
 
+## Rust migration planning review — 2026-09-25
+
+- Reviewed the actual Python service, shared model/detector/crop modules, training entry points, current route responsibilities and recorded evaluation reports.
+- Updated requirements, technical plan and task sequence; added [rust-migration.md](rust-migration.md) with proposed architecture, parity/accuracy gates and staged cutover.
+- Applied the user's scope clarification: Python/Flask remains the backend, with a proposed PyO3 extension for Rust processing/inference and a standalone Rust training CLI. Replacing Flask or porting speech/SQLite application logic is outside the agreed scope.
+- Corrected requirements that still described the original Small/Haar baseline and unconditional image non-persistence; later Large/YuNet and separately consented photo contributions are reflected in the migration baseline.
+- `cargo` and `rustc` were not found on the current PATH. No installation or native dependency compatibility test was performed.
+- This is a specification review only. Rust compilation, numerical parity, training, performance and integration gates are all pending; the Python results below do not count as Rust verification.
+
 ## Completed checks
 
 - Production build: npm.cmd run build passed on Next.js 15.5.24 after PostCSS 8.5.28 override.

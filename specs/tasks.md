@@ -1,6 +1,31 @@
 # Implementation tasks
 
-Status: version 1 implemented and verified following user authorization on 2026-09-09.
+Status: version 1 implemented and verified following user authorization on 2026-09-09. The Rust migration below is proposed; only its planning/specification work is complete.
+
+## Rust migration — proposed 2026-09-25
+
+Detailed dependencies and acceptance gates: [rust-migration.md](rust-migration.md). Implementation proceeds R0 through R5 after the user requests it.
+
+GitHub issue bodies and dependency order are prepared in [migration-issues.md](migration-issues.md): eight implementation issues and one tracking issue for the user to implement. Publication is pending because the GitHub integration rejected issue creation with HTTP 403 on 2026-09-25.
+
+- [x] Inspect Python processing/training, existing product routes and recorded evaluation evidence.
+- [x] Document target stack, checkpoint transition, parity gates, training requirements and rollback.
+- [x] Update requirements and distinguish proposed Rust work from historical Python results.
+- [x] Incorporate the user's clarification: retain the Python/Flask backend and integrate Rust processing/inference through a native extension.
+- [ ] R0: Snapshot artifact/manifest hashes, API fixtures and validation baselines.
+- [ ] R0: Validate Windows MSVC/Rust, Python/PyO3/maturin extension import, compatible LibTorch/OpenCV and release forward/backward/detector smoke checks; pin dependencies.
+- [ ] R1: Port shared image validation, EXIF/RGB, resize, YuNet, quality checks, crops and normalization; satisfy fixture parity.
+- [ ] R2: Recreate Small/Large architectures, convert trusted weights once and verify parameter mapping, raw inference parity and reload.
+- [ ] R3: Port audit/preparation and preserve existing split membership; version caches and training configuration.
+- [ ] R3: Port head training, partial fine-tuning, balanced sampling, augmentation, validation selection and final evaluation.
+- [ ] R3: Verify gradients/frozen layers and complete a Rust training run without Python; keep promotion subject to accuracy gates.
+- [ ] R4: Connect existing Flask health/scan/predict and photo sanitization to the Rust extension; preserve Python speech, feedback and SQLite logic.
+- [ ] R4: Verify existing SQLite/consent behavior and API contracts using temporary databases.
+- [ ] R5: Run Rust checks, Python backend tests, frontend build, browser flows and real-model integration against Flask with the Rust extension.
+- [ ] R5: Record release latency/memory/training benchmarks and resolve cutover regressions.
+- [ ] R5: Update extension/backend and CLI operating instructions; verify standalone Rust training, switch Flask's processing engine and test restoration of the original Python processing/artifacts.
+
+## Completed original implementation
 
 - [x] Finalize camera-once, upload, retry and single-face behavior; English UI.
 - [x] Select MobileNetV3 Small, OpenCV 4, and bounded multipart API input.
