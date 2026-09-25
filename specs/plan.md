@@ -1,6 +1,6 @@
 ﻿# Technical plan
 
-Status: the sections below describe the implemented Python design and earlier iterations. The proposed 2026-09-25 Rust migration is defined in [rust-migration.md](rust-migration.md); implementation has not started. See README.md and verification.md for the existing application's measured results and operating instructions.
+Status: the sections below describe the implemented Python design and earlier iterations. The 2026-09-25 Rust migration is defined in [rust-migration.md](rust-migration.md); implementation has started with R0 reference capture for issue #4. Each issue is tested before its PR. See README.md and verification.md for measured results and operating instructions.
 
 ## Proposed Rust migration sequence
 
@@ -11,7 +11,7 @@ Status: the sections below describe the implemented Python design and earlier it
 5. Integrate a Rust native extension into the existing Python/Flask backend; preserve its HTTP, speech, feedback and database responsibilities against captured API contracts.
 6. Run compatibility and performance gates, document extension installation and rollback, then switch Flask's processing engine only after acceptance.
 
-Proposed stack: existing Python/Flask/Waitress backend, PyO3/maturin for its Rust extension, OpenCV Rust bindings, and `tch` with a compatible LibTorch CPU distribution. The Rust training CLI shares the extension's processing/model core. Final dependency pins follow the compatibility experiment. No installation, artifact conversion, training or service change is part of this planning iteration.
+Proposed stack: existing Python/Flask/Waitress backend, PyO3/maturin for its Rust extension, OpenCV Rust bindings, and `tch` with a compatible LibTorch CPU distribution. The Rust training CLI shares the extension's processing/model core. Final dependency pins follow the compatibility experiment. R0 reference capture makes local snapshots and validation measurements; installation, conversion, training and service cutover belong to subsequent issues.
 
 ## Structure and responsibilities
 

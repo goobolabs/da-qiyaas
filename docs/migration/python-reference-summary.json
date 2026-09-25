@@ -1,0 +1,236 @@
+{
+  "artifacts": {
+    "backend/app.py": {
+      "bytes": 7698,
+      "sha256": "a836357ba89f55ff28015c7d8769a6cf919b06a66454ed6fc802d5f3a6fefcd4"
+    },
+    "backend/feedback.py": {
+      "bytes": 7091,
+      "sha256": "cc791deb45845e489c61e3b535f2c2f55ee8f9c123d4a228bc998c9e1a4e1298"
+    },
+    "backend/speech.py": {
+      "bytes": 3156,
+      "sha256": "c586a9e65b20757143a1b9069eaf17ac8a04b667ddc300815dd7f3d9522177e1"
+    },
+    "data/processed/audit.json": {
+      "bytes": 86146,
+      "sha256": "6dcd7c2842befa72cd179c6e19a7263a9accd55d5171b235afa304f7e1c60724"
+    },
+    "data/processed/test.json": {
+      "bytes": 602882,
+      "sha256": "acef709d66fc990969a337a6089a0ccf9a67a093a3ebfe2ffc00690714af128b"
+    },
+    "data/processed/train.json": {
+      "bytes": 2810438,
+      "sha256": "d9f5156a70a82fad663a11cd2870c449acd7cb8bba1629ef1c73419ffbf54240"
+    },
+    "data/processed/validation.json": {
+      "bytes": 602364,
+      "sha256": "59edc34f33d1a993fc0a75aa66d482f69b2e19294d7d3495b94205c773874ccd"
+    },
+    "docs/model-comparison.json": {
+      "bytes": 4669,
+      "sha256": "6b627c353d73c177554a59b43ede73d4638084f00bdcde30d7e56808f3269e17"
+    },
+    "docs/model-detector-comparison.json": {
+      "bytes": 4760,
+      "sha256": "0da1ed16e32e3b9725a86384f56a79783bbd25765bed9d94bc33804fb5b6c9c6"
+    },
+    "docs/model-evaluation.json": {
+      "bytes": 14973,
+      "sha256": "b3de0f99610d7763d468b3c18e7aa8d3215beeed9814fe53bc71a477668813a2"
+    },
+    "docs/model-improvement.json": {
+      "bytes": 15164,
+      "sha256": "5627244aa3d39ef30c878b8730126c3d0c19a0be16d3c4e4a0ab862261de64b1"
+    },
+    "docs/model-large-comparison.json": {
+      "bytes": 18474,
+      "sha256": "e94b3abb11aa476b64edc6a38bda5f36ee0df38fee92b2d90f6ff109c34ce04e"
+    },
+    "ml/compare_large.py": {
+      "bytes": 12104,
+      "sha256": "ac343936ee4e9cc0aef555604b1a4b760fb256d8e3182758b05cd159a4312e39"
+    },
+    "ml/face_crop.py": {
+      "bytes": 361,
+      "sha256": "fc4c7ff7ed86d6a3c5dcbbaf937a6ded12ac12bfb7a21a1f425506807033fcdc"
+    },
+    "ml/face_detect.py": {
+      "bytes": 2051,
+      "sha256": "96055dafce71acd77503927d9289c720f586399c88214689c3648540a6a987b0"
+    },
+    "ml/finetune.py": {
+      "bytes": 6398,
+      "sha256": "654318c755b46687a449fa501fc8f3d75b181dfaeb3ba9832d2d0a7984299f1c"
+    },
+    "ml/improve.py": {
+      "bytes": 10050,
+      "sha256": "37e1d2d1e167158560024b1786ffb1b167f8cbbcb7dec60a2b669f9d15cfeb08"
+    },
+    "ml/migration_baseline.py": {
+      "bytes": 17212,
+      "sha256": "48dc513b267584fa28c31e9a703ee8247d46cdbc9262a68d872ae2f22dfb5c37"
+    },
+    "ml/migration_contracts.py": {
+      "bytes": 9141,
+      "sha256": "9aebdf7f08eee6d6e25039429a8fe93483db860592de9b36fc5661191a86193c"
+    },
+    "ml/model.py": {
+      "bytes": 2172,
+      "sha256": "b5738ce6ff11776cdf3baa8b49f192c46762beb2d90adcf4c02d7ba5416363a2"
+    },
+    "ml/prepare.py": {
+      "bytes": 2947,
+      "sha256": "12397386295df4dfcf5d4e27f3994123bce74db8c59ae8b409c49860deab699b"
+    },
+    "ml/train.py": {
+      "bytes": 6890,
+      "sha256": "cbf1d5958a7539e20b1046402dc871dabf28512fbfc834ac1067bd9b24df0a1c"
+    },
+    "models/age_model.pt": {
+      "bytes": 12581901,
+      "sha256": "227467ade743c75247dbd6c147d59cb9e637105ff27e1bcdc4576e5f4860cf21"
+    },
+    "models/pretrained/face_detection_yunet_2023mar.onnx": {
+      "bytes": 232589,
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4"
+    },
+    "requirements.txt": {
+      "bytes": 481,
+      "sha256": "ddd1596eae9cd99d8602d37958bf65787d2e74026f9a95d801f1ec63deb0cc2e"
+    }
+  },
+  "environment": {
+    "opencv_threads": 1,
+    "packages": {
+      "flask": "3.1.3",
+      "numpy": "2.5.3",
+      "opencv-python-headless": "4.14.0.94",
+      "pillow": "12.3.0",
+      "torch": "2.14.0",
+      "torchvision": "0.29.0"
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "torch_threads": 4
+  },
+  "http_contracts": 53,
+  "kind": "python_reference",
+  "limits": [
+    "No training or checkpoint promotion.",
+    "Test manifest was snapshotted; no test images were evaluated.",
+    "Historical reports are preserved separately from this measurement.",
+    "UTKFace results do not establish physical-webcam accuracy.",
+    "Raw predictions and private portrait fixtures remain in ignored local output.",
+    "HTTP inference is scripted; separate portrait/tensor fixtures use the real model.",
+    "MAE clamps raw ages to 0-120 before comparison, following ml.train.metrics."
+  ],
+  "local_run": "models/migration-baselines/python-r0-20260925-v2",
+  "model": {
+    "age_range": [
+      0,
+      120
+    ],
+    "architecture": "mobilenet_v3_large_balanced_crops",
+    "image_size": 160,
+    "seed": 209
+  },
+  "portrait_fixtures": 12,
+  "preprocessing": {
+    "crop_margin": 0.15,
+    "detector_id": "yunet_2023mar_score70",
+    "dtype": "float32",
+    "image_size": 160,
+    "layout": "CHW",
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "model_resize": "torchvision PIL bilinear; antialias=True",
+    "rgb": true,
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "thumbnail_resample": "Pillow BICUBIC default"
+  },
+  "recorded_utc": "2026-09-25T10:41:15.939698+00:00",
+  "schema_version": 1,
+  "scope": "full_validation",
+  "split_counts": {
+    "test": 3470,
+    "train": 16176,
+    "validation": 3467
+  },
+  "validation": {
+    "coverage": {
+      "images": 3467,
+      "multiple_faces": 0,
+      "no_face": 3,
+      "single_face": 3464
+    },
+    "crop": {
+      "age_bands": {
+        "0-12": {
+          "count": 508,
+          "mae": 3.7561399936676025
+        },
+        "13-19": {
+          "count": 165,
+          "mae": 6.1808576583862305
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.285881042480469
+        },
+        "40-59": {
+          "count": 664,
+          "mae": 8.380693435668945
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.193587303161621
+        },
+        "80-120": {
+          "count": 98,
+          "mae": 10.619548797607422
+        }
+      },
+      "count": 3464,
+      "mae_years": 5.677675247192383
+    },
+    "full": {
+      "age_bands": {
+        "0-12": {
+          "count": 509,
+          "mae": 3.892747640609741
+        },
+        "13-19": {
+          "count": 166,
+          "mae": 6.249890327453613
+        },
+        "20-39": {
+          "count": 1736,
+          "mae": 4.323190212249756
+        },
+        "40-59": {
+          "count": 664,
+          "mae": 8.327607154846191
+        },
+        "60-79": {
+          "count": 293,
+          "mae": 9.127134323120117
+        },
+        "80-120": {
+          "count": 99,
+          "mae": 11.520529747009277
+        }
+      },
+      "count": 3467,
+      "mae_years": 5.730679035186768
+    }
+  }
+}

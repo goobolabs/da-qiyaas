@@ -1,0 +1,919 @@
+{
+  "cases": [
+    {
+      "body": {
+        "model_ready": true,
+        "status": "ready"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "health.ready",
+      "route": "/api/health",
+      "status": 200
+    },
+    {
+      "body": {
+        "estimated_age": 32.5,
+        "is_estimate": true,
+        "unit": "years"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.upload",
+      "route": "/api/predict",
+      "status": 200
+    },
+    {
+      "body": {
+        "estimated_age": 32.5,
+        "face_box": {
+          "height": 0.5,
+          "width": 0.5,
+          "x": 0.1,
+          "y": 0.2
+        },
+        "is_estimate": true,
+        "quality": {
+          "face_size": "good",
+          "lighting": "good",
+          "sharpness": "good"
+        },
+        "unit": "years"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.camera",
+      "route": "/api/predict",
+      "status": 200
+    },
+    {
+      "body": {
+        "face_box": {
+          "height": 0.5,
+          "width": 0.5,
+          "x": 0.1,
+          "y": 0.2
+        },
+        "quality": {
+          "face_size": "good",
+          "lighting": "good",
+          "sharpness": "good"
+        },
+        "ready": true
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.ready",
+      "route": "/api/scan",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": {
+          "code": "MISSING_IMAGE",
+          "message": "Choose an image first."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.missing",
+      "route": "/api/predict",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_IMAGE",
+          "message": "The image cannot be read. Choose a valid image under 16 megapixels."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.invalid",
+      "route": "/api/predict",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "IMAGE_TOO_LARGE",
+          "message": "Choose an image under 8 MB."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.image_limit",
+      "route": "/api/predict",
+      "status": 413
+    },
+    {
+      "body": {
+        "error": {
+          "code": "IMAGE_TOO_LARGE",
+          "message": "Choose an image under 8 MB."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.request_limit",
+      "route": "/api/predict",
+      "status": 413
+    },
+    {
+      "body": {
+        "error": {
+          "code": "MISSING_IMAGE",
+          "message": "Choose an image first."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.missing",
+      "route": "/api/scan",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_IMAGE",
+          "message": "The image cannot be read. Choose a valid image under 16 megapixels."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.invalid",
+      "route": "/api/scan",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "IMAGE_TOO_LARGE",
+          "message": "Choose an image under 8 MB."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.image_limit",
+      "route": "/api/scan",
+      "status": 413
+    },
+    {
+      "body": {
+        "error": {
+          "code": "IMAGE_TOO_LARGE",
+          "message": "Choose an image under 8 MB."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.request_limit",
+      "route": "/api/scan",
+      "status": 413
+    },
+    {
+      "body": {
+        "model_ready": false,
+        "status": "model_not_ready"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "health.unready",
+      "route": "/api/health",
+      "status": 503
+    },
+    {
+      "body": {
+        "error": {
+          "code": "MODEL_NOT_READY",
+          "message": "The age model is not ready yet. Finish training and restart the backend."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.unready",
+      "route": "/api/predict",
+      "status": 503
+    },
+    {
+      "body": {
+        "error": {
+          "code": "MODEL_NOT_READY",
+          "message": "The age model is not ready yet. Finish training and restart the backend."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "scan.unready",
+      "route": "/api/scan",
+      "status": 503
+    },
+    {
+      "body": {
+        "error": {
+          "code": "NO_FACE",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.NO_FACE",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "MULTIPLE_FACES",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.MULTIPLE_FACES",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "FACE_TOO_SMALL",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.FACE_TOO_SMALL",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "LOW_LIGHT",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.LOW_LIGHT",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "OVEREXPOSED",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.OVEREXPOSED",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "BLURRY_FACE",
+          "message": "Synthetic contract error."
+        },
+        "face_box": null,
+        "quality": null
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.BLURRY_FACE",
+      "route": "/api/predict",
+      "status": 422
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INFERENCE_FAILED",
+          "message": "Analysis failed. Please try again."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "predict.failure",
+      "route": "/api/predict",
+      "status": 500
+    },
+    {
+      "body": {
+        "available": false,
+        "clips": 0,
+        "language": "so-SO",
+        "source": "none"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "speech.unavailable",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": "Somali audio is not configured on this server."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.unconfigured",
+      "route": "/api/speech",
+      "status": 503
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.-1",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.121",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.true",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.24.5",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.\"24\"",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": "Provide an integer age from 0 to 120."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.invalid.null",
+      "route": "/api/speech",
+      "status": 400
+    },
+    {
+      "body": {
+        "available": true,
+        "clips": 1,
+        "language": "so-SO",
+        "source": "local"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "speech.local_availability",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "bytes_hex": "fff373796e7468657469632d617564696f"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "audio/mpeg",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.local_audio",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": "Somali audio is not configured on this server."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.missing_clip",
+      "route": "/api/speech",
+      "status": 503
+    },
+    {
+      "body": {
+        "by_source": {
+          "camera": {
+            "count": 0,
+            "mean_absolute_error_years": null
+          },
+          "upload": {
+            "count": 0,
+            "mean_absolute_error_years": null
+          }
+        },
+        "count": 0,
+        "mean_absolute_error_years": null,
+        "self_reported": true
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "feedback.empty_summary",
+      "route": "/api/feedback/summary",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "Provide the ages, input method and consent."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.missing",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "Choose to share your ages before submitting."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.no_consent",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "Provide the ages, input method and consent."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.unknown_field",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "Enter whole-number ages between 0 and 120."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.fractional_age",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "Attach the photo when contributing to training."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.training_without_photo",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "absolute_error_years": 2,
+        "status": "saved",
+        "training_saved": false
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.numeric",
+      "route": "/api/feedback",
+      "status": 200
+    },
+    {
+      "body": {
+        "absolute_error_years": 2,
+        "status": "saved",
+        "training_saved": false
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.retry",
+      "route": "/api/feedback",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": {
+          "code": "FEEDBACK_CONFLICT",
+          "message": "Feedback was already submitted for this result."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.conflict",
+      "route": "/api/feedback",
+      "status": 409
+    },
+    {
+      "body": {
+        "error": {
+          "code": "INVALID_FEEDBACK",
+          "message": "A photo requires separate training consent."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.photo_no_consent",
+      "route": "/api/feedback",
+      "status": 400
+    },
+    {
+      "body": {
+        "absolute_error_years": 2,
+        "status": "saved",
+        "training_saved": true
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.photo",
+      "route": "/api/feedback",
+      "status": 200
+    },
+    {
+      "body": {
+        "absolute_error_years": 2,
+        "status": "saved",
+        "training_saved": true
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.photo_retry",
+      "route": "/api/feedback",
+      "status": 200
+    },
+    {
+      "body": {
+        "by_source": {
+          "camera": {
+            "count": 1,
+            "mean_absolute_error_years": 2.0
+          },
+          "upload": {
+            "count": 1,
+            "mean_absolute_error_years": 2.0
+          }
+        },
+        "count": 2,
+        "mean_absolute_error_years": 2.0,
+        "self_reported": true
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "feedback.summary",
+      "route": "/api/feedback/summary",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": {
+          "code": "FEEDBACK_UNAVAILABLE",
+          "message": "Feedback could not be saved. Please try again."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "feedback.storage_failure",
+      "route": "/api/feedback",
+      "status": 503
+    },
+    {
+      "body": {
+        "error": {
+          "code": "FEEDBACK_UNAVAILABLE",
+          "message": "Feedback summary is unavailable. Please try again."
+        }
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "feedback.summary_failure",
+      "route": "/api/feedback/summary",
+      "status": 503
+    },
+    {
+      "body": {
+        "bytes_hex": "fff373796e7468657469632d617564696f"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "audio/mpeg",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.local_priority",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "available": true,
+        "clips": 0,
+        "language": "so-SO",
+        "source": "azure"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "GET",
+      "name": "speech.azure_availability",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "bytes_hex": "73796e7468657469632d70726f76696465722d617564696f"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "audio/mpeg",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.azure_audio",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "bytes_hex": "73796e7468657469632d70726f76696465722d617564696f"
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "audio/mpeg",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.azure_cached",
+      "route": "/api/speech",
+      "status": 200
+    },
+    {
+      "body": {
+        "error": "Audio is unavailable. Please try again."
+      },
+      "headers": {
+        "Cache-Control": "no-store",
+        "Content-Type": "application/json",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "method": "POST",
+      "name": "speech.azure_failure",
+      "route": "/api/speech",
+      "status": 502
+    }
+  ],
+  "description": "Real Flask handlers with scripted inference, temporary SQLite and synthetic/offline audio; no real user data or provider calls.",
+  "schema_version": 1
+}

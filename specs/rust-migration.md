@@ -1,6 +1,6 @@
 # Rust processing and model training migration
 
-Date: 2026-09-25. Status: proposed; documentation only. Implementation awaits the user's next instruction.
+Date: 2026-09-25. Status: implementation authorized, one issue and tested PR at a time. R0 Python reference capture is implemented for issue #4; Rust toolchain and later migration phases remain pending.
 
 ## Objective and scope
 
@@ -142,6 +142,6 @@ Migration parity gates, to be fixed before implementation measurements:
 
 If a gate fails, keep Flask using the original Python processing engine and artifacts, document the failed assumption and revise the proposal before engine cutover. Do not relax a tolerance after observing results without an explicit documented decision.
 
-## Planning review outcome
+## Implementation progress
 
-This document and the linked requirements, plan, tasks and verification notes are the deliverables for the current request. No Rust workspace has been created, no tools installed, no model converted or trained, and no running backend changed. The next implementation step, when requested, is R0.
+Issue #4 adds offline Python reference capture, checked-in synthetic HTTP contracts, full validation aggregates and local snapshots/fixtures. See [the reference guide](../docs/migration/README.md) and [verification](verification.md) for commands and results. Rust workspace/toolchain work is tracked by #5; no Rust model conversion, training or processing-engine cutover has occurred. Each implementation issue must be tested before its PR is opened.
